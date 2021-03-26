@@ -1,2 +1,2 @@
-# Recommender_System
-This is a project building a recommender system
+# Recommender System
+A Recommender system 
