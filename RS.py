@@ -1,20 +1,20 @@
 import numpy as np
+import pandas as pd
 
-from sklearn.decomposition import TruncatedSVD
+from surprise import SVD, NMF, SVDpp
 
-# Regular SVD
-A = np.array([[3,4,3],[1,2,3],[4,2,1]])
+columns = ['user_id','item_id','ratings','timestamp']
+df_read = pd.read_csv("ml-100k/u.data", sep = '\t', names=columns)
 
-U, D, VT = np.linalg.svd(A)
 
-A_remake = (U @ np.diag(D) @ VT)
+new_columns = ['item_id', 'movie title', 'release date', 'video release date', 'IMDb URL', 'unknown', 'Action', 'Adventure',
+          'Animation', 'Childrens', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Film-Noir', 'Horror',
+          'Musical', 'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'War', 'Western']
 
-print(A_remake)
+movies = pd.read_csv('ml-100k/u.item', sep='|',names=new_columns,encoding='latin-1')
+movie_names = [['item_ID','movie_title']]
 
-# Truncated SVD
-B = np.array([[4,3,4],[3,2,1],[1,2,4]])
+cm = pd.merge(df_read, movie_names, on='item_id')
 
-trun_svd = TruncatedSVD(n_components=2)
-B_transformed = trun_svd.fit_transform(B, y=None)
-
-print(B_transformed)
+cm = cm[['user_id','movie title', 'rating']]
+cm.head()
