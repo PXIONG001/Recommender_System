@@ -18,3 +18,6 @@ cm = pd.merge(df_read, movie_names, on='item_id')
 
 cm = cm[['user_id','movie title', 'ratings']]
 cm.head()
+
+my_ratings = pd.read_csv('myratings.csv')
+
